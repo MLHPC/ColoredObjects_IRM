@@ -8,7 +8,7 @@ SHELL_ARGS="--l2_regularizer_weight=0.001 \
             --steps=800  \
             --step_gamma=0.1 \
             --dataset=ColoredObject \
-            --irm_type=irmv1_mmrex \
+            --irm_type=irmv1_vrex \
             --var_beta=0.3 \
             --min_alpha=-0.2 \
             "
