@@ -133,14 +133,12 @@ for restart in range(flags.n_restarts):
             train_nll = train_nll1 + train_nll2
             grad1 = autograd.grad(
                 train_nll1 * flags.envs_num, ebd.parameters(),
-                create_graph=True)[0]
+                create_graph=True)[0].pow(2).mean()
             grad2 = autograd.grad(
                 train_nll2 * flags.envs_num, ebd.parameters(),
-                create_graph=True)[0]
+                create_graph=True)[0].pow(2).mean()
 
-            grad1_mean = torch.mean(grad1)
-            grad2_mean = torch.mean(grad2)
-            mean_of_grads = (grad1_mean + grad2_mean) / 2
+            mean_of_grads = (grad1 + grad2) / 2
 
             grad_list = [grad1_mean, grad2_mean]
             var_of_mean_grads = torch.var(torch.stack(grad_list))
@@ -179,14 +177,12 @@ for restart in range(flags.n_restarts):
             train_nll = train_nll1 + train_nll2
             grad1 = autograd.grad(
                 train_nll1 * flags.envs_num, ebd.parameters(),
-                create_graph=True)[0]
+                create_graph=True)[0].pow(2).mean()
             grad2 = autograd.grad(
                 train_nll2 * flags.envs_num, ebd.parameters(),
-                create_graph=True)[0]
+                create_graph=True)[0].pow(2).mean()
 
-            grad1_mean = torch.mean(grad1)
-            grad2_mean = torch.mean(grad2)
-            grad_list = [grad1_mean, grad2_mean]
+            grad_list = [grad1, grad2]
 
             train_penalty = (1 - self.hparams['min_alpha'] * len(grad_list)) * max(grad_list) + self.hparams['min_alpha'] * sum(grad_list)
         elif model_type == "bayes_variance":
