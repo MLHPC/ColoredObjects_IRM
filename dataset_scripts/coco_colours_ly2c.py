@@ -51,7 +51,7 @@ total_train_num = np.sum([np.sum([x[1] for x in c]) for c in CLASSES])
 total_test_num =  np.sum([np.sum([x[2] for x in c]) for c in CLASSES])
 
 
-output_dir = os.path.join("data_dir/SPCOCO", 'coco')
+output_dir = os.path.join("/gs/bs/tge-24IJ0078/dataset/SPCOCO", 'coco')
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
