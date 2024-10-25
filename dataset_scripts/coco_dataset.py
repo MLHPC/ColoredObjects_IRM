@@ -104,10 +104,11 @@ def get_spcoco_dataset(sp_ratio_list=None, noise_ratio=None, num_classes=None, f
         noise_ratio=noise_ratio,
         dataset='colour', train_test="train", flags=flags)
     # shuffle train
-    train_x_array = train_data_handle["images"].value
-    train_y_array = train_data_handle["y"].value
-    train_env_array = train_data_handle["e"].value
-    train_sp_array = train_data_handle["g"].value
+    train_x_array = train_data_handle["images"][:]
+    train_y_array = train_data_handle["y"][:]
+    train_env_array = train_data_handle["e"][:]
+    train_sp_array = train_data_handle["g"][:]
+    print(train_x_array.shape)
     perm = np.random.permutation(
         range(train_x_array.shape[0]))
     coco_dataset_train = COCODataset(
@@ -124,10 +125,10 @@ def get_spcoco_dataset(sp_ratio_list=None, noise_ratio=None, num_classes=None, f
         train_test="test",
         flags=flags)
     coco_dataset_test = COCODataset(
-        x_array=test_data_handle["images"].value,
-        y_array=test_data_handle["y"].value,
-        env_array=test_data_handle["e"].value,
+        x_array=test_data_handle["images"][:],
+        y_array=test_data_handle["y"][:],
+        env_array=test_data_handle["e"][:],
         transform=coco_transform,
-        sp_array=test_data_handle["g"].value)
+        sp_array=test_data_handle["g"][:])
     return coco_dataset_train, coco_dataset_test
 
