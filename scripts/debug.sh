@@ -8,9 +8,9 @@ SHELL_ARGS="--l2_regularizer_weight=0.001 \
             --steps=1000  \
             --step_gamma=0.1 \
             --dataset=ColoredObject \
-            --irm_type=irmv1_vrex \
+            --irm_type=irmv1_mmrex \
             --var_beta=.1 \
-            --min_alpha=-1 \
+            --min_alpha=-1. \
             "
             
 CMD="qsub -g tge-24IJ0078 run.sh ${SHELL_ARGS}"
