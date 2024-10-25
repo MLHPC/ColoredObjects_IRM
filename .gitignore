@@ -5,7 +5,6 @@ resource/
 data/*
 coco
 meta_run
-scripts
 wandb
 logs
 ipynb_checkpoints
