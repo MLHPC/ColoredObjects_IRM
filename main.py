@@ -184,7 +184,7 @@ for restart in range(flags.n_restarts):
 
             grad_list = [grad1, grad2]
 
-            train_penalty = (1 - self.hparams['min_alpha'] * len(grad_list)) * max(grad_list) + self.hparams['min_alpha'] * sum(grad_list)
+            train_penalty = (1 - flags.min_alpha * len(grad_list)) * max(grad_list) + flags.min_alpha * sum(grad_list)
         elif model_type == "bayes_variance":
             sampleN = 10
             train_penalty = 0
