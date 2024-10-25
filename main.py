@@ -140,7 +140,7 @@ for restart in range(flags.n_restarts):
 
             mean_of_grads = (grad1 + grad2) / 2
 
-            grad_list = [grad1_mean, grad2_mean]
+            grad_list = [grad1, grad2]
             var_of_mean_grads = torch.var(torch.stack(grad_list))
 
             train_penalty = (1 - flags.var_beta) * mean_of_grads + flags.var_beta * var_of_mean_grads
