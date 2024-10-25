@@ -1,5 +1,6 @@
 SHELL_ARGS="--l2_regularizer_weight=0.001 \
-            --lr 0.01 --batch_size=1000 \
+            --lr 0.001 \
+            --batch_size=1000 \
             --penalty_anneal_iter=80 \
             --opt=sgd \
             --print_every=10 \
@@ -8,7 +9,6 @@ SHELL_ARGS="--l2_regularizer_weight=0.001 \
             --step_gamma=0.1 \
             --dataset=ColoredObject \
             --irm_type=irmv1_vrex \
-
             "
             
 CMD="qsub -g tge-24IJ0078 run.sh ${SHELL_ARGS}"
