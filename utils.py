@@ -22,7 +22,7 @@ def return_model(flags):
         elif flags.dataset == "ColoredObject":
             model_type="irmv1b"
         elif flags.dataset == "CifarMnist":
-            ="irmv1b"
+            model_type="irmv1b"
         else:
             raise("Please specify the irm model for this dataset!")
     elif flags.irm_type == "irmv1_vrex" or flags.irm_type == "irmv1_mmrex":
