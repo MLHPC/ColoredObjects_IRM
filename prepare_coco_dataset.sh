@@ -6,6 +6,12 @@
 #$ -e results/$JOB_ID.err
 #$ -N coco_colours_ly2c.sh
 
+source /home/3/uy02093/env/py3918/bin/activate
+# echo "PYTHON Environment: $PYTHON_PATH"
+# export PYTHONPATH=.
+# export PATH=$PYTHON_PATH:$PATH
+
+
 # mkdir -p /gs/bs/tge-24IJ0078/dataset/SPCOCO
 # mkdir -p /gs/bs/tge-24IJ0078/dataset/coco
 # wget http://images.cocodataset.org/zips/train2017.zip -P /gs/bs/tge-24IJ0078/dataset/coco/
