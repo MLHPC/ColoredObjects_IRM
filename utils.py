@@ -22,9 +22,11 @@ def return_model(flags):
         elif flags.dataset == "ColoredObject":
             model_type="irmv1b"
         elif flags.dataset == "CifarMnist":
-            model_type="irmv1b"
+            ="irmv1b"
         else:
             raise("Please specify the irm model for this dataset!")
+    elif flags.irm_type == "irmv1_vrex" or flags.irm_type == "irmv1_mmrex":
+        model_type = flags.irm_type
     elif flags.irm_type == "birm":
         if flags.dataset == "CMNIST":
             model_type="bayes_fullbatch"

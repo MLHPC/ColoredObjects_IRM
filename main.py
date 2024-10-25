@@ -31,13 +31,15 @@ parser.add_argument('--print_every', type=int,default=100)
 parser.add_argument('--data_num', type=int, default=2000)
 parser.add_argument('--lr', type=float, default=0.001)
 parser.add_argument('--env_type', default="linear", type=str, choices=["2_group", "cos", "linear"])
-parser.add_argument('--irm_type', default="irmv1", type=str, choices=["birm", "irmv1", "erm"])
+parser.add_argument('--irm_type', default="irmv1", type=str, choices=["birm", "irmv1", "erm", "irmv1_vrex", "irmv1_mmrex"])
 parser.add_argument('--n_restarts', type=int, default=1)
 parser.add_argument('--image_scale', type=int, default=64)
 parser.add_argument('--hidden_dim', type=int, default=16)
 parser.add_argument('--step_gamma', type=float, default=0.1)
 parser.add_argument('--penalty_anneal_iters', type=int, default=200)
 parser.add_argument('--penalty_weight', type=float, default=10000.0)
+parser.add_argument('--var_beta', type=float, default=.5)
+parser.add_argument('--min_alpha', type=float, default=-5)
 parser.add_argument('--steps', type=int, default=501)
 parser.add_argument('--grayscale_model', type=int, default=0)
 flags = parser.parse_args()
@@ -117,6 +119,33 @@ for restart in range(flags.n_restarts):
                 train_nll * flags.envs_num, ebd.parameters(),
                 create_graph=True)[0]
             train_penalty =  torch.mean(grad**2)
+        elif model_type == "irmv1_vrex":
+            e1 = (train_g == 0).view(-1).nonzero().view(-1)
+            e2 = (train_g == 1).view(-1).nonzero().view(-1)
+            e1 = e1[torch.randperm(len(e1))]
+            e2 = e2[torch.randperm(len(e2))]
+            s1 = torch.cat([e1[::2], e2[::2]])
+            s2 = torch.cat([e1[1::2], e2[1::2]])
+            train_logits = ebd(train_g).view(-1, 1) * mlp(train_x)
+
+            train_nll1 = mean_nll(train_logits[s1], train_y[s1])
+            train_nll2 = mean_nll(train_logits[s2], train_y[s2])
+            train_nll = train_nll1 + train_nll2
+            grad1 = autograd.grad(
+                train_nll1 * flags.envs_num, ebd.parameters(),
+                create_graph=True)[0]
+            grad2 = autograd.grad(
+                train_nll2 * flags.envs_num, ebd.parameters(),
+                create_graph=True)[0]
+
+            grad1_mean = torch.mean(grad1)
+            grad2_mean = torch.mean(grad2)
+            mean_of_grads = (grad1_mean + grad2_mean) / 2
+
+            grad_list = [grad1_mean, grad2_mean]
+            var_of_mean_grads = torch.var(torch.stack(grad_list))
+
+            train_penalty = (1 - flags.var_beta) * mean_of_grads + flags.var_beta * var_of_mean_grads
         elif model_type == "irmv1b":
             e1 = (train_g == 0).view(-1).nonzero().view(-1)
             e2 = (train_g == 1).view(-1).nonzero().view(-1)
@@ -136,6 +165,30 @@ for restart in range(flags.n_restarts):
                 train_nll2 * flags.envs_num, ebd.parameters(),
                 create_graph=True)[0]
             train_penalty = torch.mean(grad1 * grad2)
+        elif model_type == "irmv1_mmrex":
+            e1 = (train_g == 0).view(-1).nonzero().view(-1)
+            e2 = (train_g == 1).view(-1).nonzero().view(-1)
+            e1 = e1[torch.randperm(len(e1))]
+            e2 = e2[torch.randperm(len(e2))]
+            s1 = torch.cat([e1[::2], e2[::2]])
+            s2 = torch.cat([e1[1::2], e2[1::2]])
+            train_logits = ebd(train_g).view(-1, 1) * mlp(train_x)
+
+            train_nll1 = mean_nll(train_logits[s1], train_y[s1])
+            train_nll2 = mean_nll(train_logits[s2], train_y[s2])
+            train_nll = train_nll1 + train_nll2
+            grad1 = autograd.grad(
+                train_nll1 * flags.envs_num, ebd.parameters(),
+                create_graph=True)[0]
+            grad2 = autograd.grad(
+                train_nll2 * flags.envs_num, ebd.parameters(),
+                create_graph=True)[0]
+
+            grad1_mean = torch.mean(grad1)
+            grad2_mean = torch.mean(grad2)
+            grad_list = [grad1_mean, grad2_mean]
+
+            train_penalty = (1 - self.hparams['min_alpha'] * len(grad_list)) * max(grad_list) + self.hparams['min_alpha'] * sum(grad_list)
         elif model_type == "bayes_variance":
             sampleN = 10
             train_penalty = 0
