@@ -125,7 +125,7 @@ id_test_file.create_dataset('e', (total_test_num,), dtype='int32')
 
 
 
-coco = COCO('data_dir/coco/annotations/instances_train2017.json')
+coco = COCO('/gs/bs/tge-24IJ0078/dataset/coco/annotations/instances_train2017.json')
 cats = coco.loadCats(coco.getCatIds())
 
 def coco_on_color(im, catIds, class_, sp_ratio, noise_ratio):
@@ -144,7 +144,7 @@ def coco_on_color(im, catIds, class_, sp_ratio, noise_ratio):
         return None, None, None
 
     try:
-        I = np.asarray(Image.open(f"data_dir/coco/train2017/" + im["file_name"]))
+        I = np.asarray(Image.open(f"/gs/bs/tge-24IJ0078/dataset/coco/train2017/" + im["file_name"]))
     except:
         return None, None, None
     if len(I.shape) == 2:
