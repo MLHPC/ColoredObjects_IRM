@@ -1,5 +1,5 @@
 SHELL_ARGS="--l2_regularizer_weight=0.001 \
-            --lr 0.001 \
+            --lr 0.005 \
             --batch_size=1000 \
             --penalty_anneal_iter=80 \
             --opt=sgd \
