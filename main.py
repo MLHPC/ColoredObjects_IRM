@@ -42,6 +42,9 @@ parser.add_argument('--var_beta', type=float, default=.0)
 parser.add_argument('--min_alpha', type=float, default=-5)
 parser.add_argument('--steps', type=int, default=501)
 parser.add_argument('--grayscale_model', type=int, default=0)
+parser.add_argument('--wandb_project_name', type=str, default="COloredObject_test")
+parser.add_argument('--wandb_entity_name', type=str, default="katoro13")
+
 flags = parser.parse_args()
 irm_type = flags.irm_type
 
@@ -50,6 +53,11 @@ np.random.seed(flags.seed)
 random.seed(1) # Fix the random seed of dataset
 # Because random package is used to generate CifarMnist dataset
 # We fix the randomness of the dataset.
+
+wandb.init(config=vars(flags), 
+            project=flags.wandb_project_name,
+            entity=flags.wandb_entity_name,
+            )
 
 
 final_train_accs = []
@@ -285,6 +293,19 @@ for restart in range(flags.n_restarts):
                 train_penalty.detach().cpu().numpy(),
                 test_acc.detach().cpu().numpy(),
             )
+            #wandb log
+            results = {}
+            results['step'] = step
+            results['train_loss'] = loss.detach().cpu().numpy()
+            results['train_penalty'] = train_penalty.detach().cpu().numpy()
+            results['test_acc'] = test_acc.detach().cpu().numpy()
+            results['train_acc'] = train_acc.detach().cpu().numpy()
+            results['lr'] = optimizer.param_groups[0]['lr']
+            if model_type == "irmv1_vrex" or model_type == "irmv1_mmrex":
+                results['grad1'] = grad1.detach().cpu().numpy()
+                results['grad2'] = grad2.detach().cpu().numpy()
+                results['mean_of_grads'] = (grad1.detach().cpu().numpy() + grad2.detach().cpu().numpy()) / 2
+            wandb.log(results)
     final_train_accs.append(train_acc.detach().cpu().numpy())
     final_test_accs.append(test_acc.detach().cpu().numpy())
     print('Final test acc: %s' % np.mean(final_test_accs))
