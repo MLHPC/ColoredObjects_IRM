@@ -13,7 +13,7 @@ for var_beta in "${BETA_LIST[@]}" ; do
                 --step_gamma=0.1 \
                 --dataset=ColoredObject \
                 --irm_type=irmv1_vrex \
-                --var_beta=${var_beta}$ \
+                --var_beta=${var_beta} \
                 --min_alpha=-1. \
                 --wandb_project_name=ColoredObject_irmv1_vrex \
                 --wandb_entity_name=katoro13 \

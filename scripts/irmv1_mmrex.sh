@@ -14,7 +14,7 @@ for min_alpha in "${MIN_ALPHA_LIST[@]}" ; do
                 --dataset=ColoredObject \
                 --irm_type=irmv1_vrex \
                 --var_beta=0 \
-                --min_alpha=${min_alpha}$ \
+                --min_alpha=${min_alpha} \
                 --wandb_project_name=ColoredObject_irmv1_mmrex \
                 --wandb_entity_name=katoro13 \
                 "
