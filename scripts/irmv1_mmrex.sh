@@ -25,3 +25,4 @@ for min_alpha in "${MIN_ALPHA_LIST[@]}" ; do
 
     count=$((count += 1))
         
+done

@@ -25,3 +25,4 @@ for var_beta in "${BETA_LIST[@]}" ; do
 
     count=$((count += 1))
         
+done
