@@ -1,6 +1,7 @@
 import argparse
 import random
 import numpy as np
+import wandb
 import torch
 import torch.optim.lr_scheduler as lr_scheduler
 from torchvision import datasets
