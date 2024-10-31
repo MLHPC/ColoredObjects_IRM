@@ -1,4 +1,4 @@
-MIN_ALPHA_LIST=(-1e-2 -2e-2 -3e-2 -4e-2 -5e-2 -6e-2 -7e-2 -8e-2 -9e-2)
+MIN_ALPHA_LIST=(-3e-2)
 
 for min_alpha in "${MIN_ALPHA_LIST[@]}" ; do
 
