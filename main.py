@@ -24,7 +24,7 @@ from utils import mean_nll_multi_class,eval_acc_multi_class,mean_accuracy_multi_
 parser = argparse.ArgumentParser(description='Colored MNIST')
 parser.add_argument('--envs_num', type=int, default=2)
 parser.add_argument('--batch_size', type=int, default=1024)
-parser.add_argument('--seed', type=int, default=1)
+parser.add_argument('--seed', type=int, default=2)
 parser.add_argument('--dataset', type=str, default="CMNIST", choices=["CifarMnist","ColoredObject", "CMNIST"])
 parser.add_argument('--opt', type=str, default="adam", choices=["adam", "sgd"])
 parser.add_argument('--l2_regularizer_weight', type=float,default=0.001)
