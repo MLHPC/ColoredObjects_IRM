@@ -1,4 +1,4 @@
-SHELL_ARGS="--l2_regularizer_weight=0.001 \
+SHELL_ARGS="--l2_regularizer_weight=0.1 \
             --lr 0.001 \
             --batch_size=512 \
             --penalty_anneal_iter=80 \
