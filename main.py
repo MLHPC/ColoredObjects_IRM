@@ -43,7 +43,7 @@ parser.add_argument('--var_beta', type=float, default=.0)
 parser.add_argument('--min_alpha', type=float, default=-5)
 parser.add_argument('--steps', type=int, default=501)
 parser.add_argument('--grayscale_model', type=int, default=0)
-parser.add_argument('--wandb_project_name', type=str, default="COloredObject_test")
+parser.add_argument('--wandb_project_name', type=str, default="ColoredObject_test")
 parser.add_argument('--wandb_entity_name', type=str, default="katoro13")
 
 flags = parser.parse_args()
@@ -269,7 +269,7 @@ for restart in range(flags.n_restarts):
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-        lr_schd.step()
+        # lr_schd.step()
 
         if step % flags.print_every == 0:
             if flags.dataset != 'CifarMnist':
