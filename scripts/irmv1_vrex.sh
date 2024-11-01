@@ -1,9 +1,9 @@
-BETA_LIST=(0.8)
+BETA_LIST=(0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0)
 
 for var_beta in "${BETA_LIST[@]}" ; do
 
     SHELL_ARGS="--l2_regularizer_weight=0.001 \
-                --lr 0.01 \
+                --lr 0.001 \
                 --batch_size=512 \
                 --penalty_anneal_iter=80 \
                 --opt=sgd \
@@ -15,7 +15,7 @@ for var_beta in "${BETA_LIST[@]}" ; do
                 --irm_type=irmv1_vrex \
                 --var_beta=${var_beta} \
                 --min_alpha=-1. \
-                --wandb_project_name=ColoredObject_irmv1_vrex \
+                --wandb_project_name=ColoredObject_irmv1_vrex_v2 \
                 --wandb_entity_name=katoro13 \
                 "
                 
