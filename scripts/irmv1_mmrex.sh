@@ -1,9 +1,9 @@
-MIN_ALPHA_LIST=(-3e-2)
+MIN_ALPHA_LIST=(-0.1 -0.2 -0.3 -0.4 -0.5 -0.6 -0.7 -0.8 -0.9 -1.0)
 
 for min_alpha in "${MIN_ALPHA_LIST[@]}" ; do
 
     SHELL_ARGS="--l2_regularizer_weight=0.001 \
-                --lr 0.01 \
+                --lr 0.001 \
                 --batch_size=512 \
                 --penalty_anneal_iter=80 \
                 --opt=sgd \
@@ -15,7 +15,7 @@ for min_alpha in "${MIN_ALPHA_LIST[@]}" ; do
                 --irm_type=irmv1_mmrex \
                 --var_beta=0 \
                 --min_alpha=${min_alpha} \
-                --wandb_project_name=ColoredObject_irmv1_mmrex \
+                --wandb_project_name=ColoredObject_irmv1_mmrex_v2 \
                 --wandb_entity_name=katoro13 \
                 "
                 
