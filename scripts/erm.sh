@@ -1,5 +1,5 @@
 SHELL_ARGS="--l2_regularizer_weight=0.001 \
-            --lr 0.01 \
+            --lr 0.001 \
             --batch_size=512 \
             --penalty_anneal_iter=80 \
             --opt=sgd \
@@ -11,7 +11,7 @@ SHELL_ARGS="--l2_regularizer_weight=0.001 \
             --irm_type=irmv1_vrex \
             --var_beta=0. \
             --min_alpha=-1. \
-            --wandb_project_name=ColoredObject_erm \
+            --wandb_project_name=ColoredObject_erm_v2 \
             --wandb_entity_name=katoro13 \
             "
             
